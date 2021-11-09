@@ -1,0 +1,42 @@
+version: '3'
+services:
+
+  ms-random_word:
+    image: msrandomword
+    build:
+      context: ./ms-random_word
+      dockerfile: Dockerfile
+    container_name: msc-random_word
+    ports:
+      - "3000:80"
+    environment:
+      - PORT=80
+    restart: "no"
+
+  ms-uppercase:
+    image: msuppercase
+    build:
+      context: ./ms-uppercase
+      dockerfile: Dockerfile
+    container_name: msc-uppercase
+    ports:
+      - "3001:80"
+    environment:
+      - PORT=80
+      - MSNUM_HOST=ms-random_word
+      - MSNUM_PORT=80
+    restart: "no"
+
+  ms-random_number:
+    image: msrandomnumber
+    build:
+      context: ./ms-random_number
+      dockerfile: Dockerfile
+    container_name: msc-random_number
+    ports:
+      - "3002:80"
+    environment:
+      - PORT=80
+      - MSNUM_HOST=ms-uppercase
+      - MSNUM_PORT=80
+    restart: "no"
